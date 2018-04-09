@@ -1,0 +1,9 @@
+D:\My Documents\Developer\C#\Night Light\Night Light\bin\Debug\Night Light.exe.config
+D:\My Documents\Developer\C#\Night Light\Night Light\bin\Debug\Night Light.exe
+D:\My Documents\Developer\C#\Night Light\Night Light\bin\Debug\Night Light.pdb
+D:\My Documents\Developer\C#\Night Light\Night Light\obj\Debug\Night Light.csprojResolveAssemblyReference.cache
+D:\My Documents\Developer\C#\Night Light\Night Light\obj\Debug\Night_Light.Form1.resources
+D:\My Documents\Developer\C#\Night Light\Night Light\obj\Debug\Night_Light.Properties.Resources.resources
+D:\My Documents\Developer\C#\Night Light\Night Light\obj\Debug\Night Light.csproj.GenerateResource.Cache
+D:\My Documents\Developer\C#\Night Light\Night Light\obj\Debug\Night Light.exe
+D:\My Documents\Developer\C#\Night Light\Night Light\obj\Debug\Night Light.pdb
