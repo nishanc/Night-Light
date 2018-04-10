@@ -19,15 +19,35 @@ namespace Night_Light
         public Form1()
         {
             InitializeComponent();
+            //Start window in bottom right corner
+            Rectangle workingArea = Screen.GetWorkingArea(this);
+            this.Location = new Point(workingArea.Right - Size.Width,
+                                      workingArea.Bottom - Size.Height);
+
             //Start window in top right corner
-            this.StartPosition = FormStartPosition.Manual;
-            foreach (var scrn in Screen.AllScreens)
+            //this.StartPosition = FormStartPosition.Manual;
+            //foreach (var scrn in Screen.AllScreens)
+            //{
+            //    if (scrn.Bounds.Contains(this.Location))
+            //    {
+            //        this.Location = new Point(scrn.Bounds.Right - this.Width, scrn.Bounds.Top);
+            //        return;
+            //    }
+            //}
+
+        }
+
+        private void SetDisplay()
+        {
+            if (isTimeInRange())
             {
-                if (scrn.Bounds.Contains(this.Location))
-                {
-                    this.Location = new Point(scrn.Bounds.Right - this.Width, scrn.Bounds.Top);
-                    return;
-                }
+                SetBrightness(50);
+                SetGamma(70);
+            }
+            else
+            {
+                SetBrightness(100);
+                SetGamma(200);
             }
         }
 
@@ -49,27 +69,24 @@ namespace Night_Light
 
         private void tbrBrightness_Scroll(object sender, EventArgs e)
         {
-            byte g = 0;
-            if (byte.TryParse(tbrBrightness.Value + "", out g))
+            byte b = 0;
+            if (byte.TryParse(tbrBrightness.Value + "", out b))
             {
-                SetBrightness(g);
-                lblBrightnessVal.Text = g + "";
+                SetBrightness(b);
+                lblBrightnessVal.Text = b + "";
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            //this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             this.WindowState = FormWindowState.Normal;
             if (isRunAtStartup())
             {
                 cbxRunAtStartup.Checked = true;
             }
-            if (isTimeInRange())
-            {
-                SetBrightness(50);
-                SetGamma(100);
-            }
+            SetDisplay();
+
             var initBrig = GetBrightness();
             lblBrightnessVal.Text = initBrig + "";
             tbrBrightness.Value = initBrig;
@@ -199,6 +216,52 @@ namespace Night_Light
                 // current time is between start and stop
             }
             else return false;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) //Hide main window and minimize to task bar
+        {
+            //if(this.WindowState == FormWindowState.Normal)
+            //{
+            //    e.Cancel = true;
+            //    //WindowState = FormWindowState.Minimized;
+            //    Hide();
+            //    notifyIcon1.Visible = true;
+            //}
+
+        }
+
+        private void notifyIcon1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Form1 frm = new Form1();
+                frm.Show();
+                if(this.WindowState == FormWindowState.Minimized)
+                    this.WindowState = FormWindowState.Normal;
+                notifyIcon1.Visible = false;
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Application.Exit();
+            //notifyIcon1.Visible = false;
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                
+                this.Hide();
+                notifyIcon1.Visible = true;
+                notifyIcon1.ShowBalloonTip(500);
+            }
+            //e.Cancel = true;
+            //WindowState = FormWindowState.Minimized;
+
+
         }
     }
 }
