@@ -3,4 +3,10 @@ Targets .NET framework 3.5
 References : https://www.pinvoke.net/default.aspx/gdi32.SetDeviceGammaRamp
 Gamma defines the mathematical relationship between red, green, and blue color values that are sent to the display and the amount of light that, ultimately emitted from it.
 
-![Alt text](/window.png?raw=true "Night Light") 
+Main window
+
+![Alt text](/window.png?raw=true "Night Light")
+
+On task bar
+
+![Alt text](/window2.png?raw=true "Night Light") 

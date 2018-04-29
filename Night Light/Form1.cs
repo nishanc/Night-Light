@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Management; //Need to add System.Management dll to References
 using Microsoft.Win32;
+using System.Timers;
 
 namespace Night_Light
 {
@@ -37,7 +38,7 @@ namespace Night_Light
 
         }
 
-        private void SetDisplay()
+        public static void SetDisplay()
         {
             if (isTimeInRange())
             {
@@ -73,7 +74,7 @@ namespace Night_Light
             if (byte.TryParse(tbrBrightness.Value + "", out b))
             {
                 SetBrightness(b);
-                lblBrightnessVal.Text = b + "";
+                lblBrightnessVal.Text = b + "%";
             }
         }
 
@@ -88,7 +89,7 @@ namespace Night_Light
             SetDisplay();
 
             var initBrig = GetBrightness();
-            lblBrightnessVal.Text = initBrig + "";
+            lblBrightnessVal.Text = initBrig + "%";
             tbrBrightness.Value = initBrig;
         }
 
@@ -170,7 +171,7 @@ namespace Night_Light
                         int br = 0;
                         int.TryParse(br_obj + "", out br);
                         return br;
-                        break;
+                        //break;
                     }
                 }
             }
@@ -203,7 +204,7 @@ namespace Night_Light
 
         }
 
-        public bool isTimeInRange()
+        public static bool isTimeInRange()
         {
             TimeSpan start = TimeSpan.Parse("18:00");
             TimeSpan end = TimeSpan.Parse("06:00");
@@ -220,14 +221,7 @@ namespace Night_Light
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) //Hide main window and minimize to task bar
         {
-            //if(this.WindowState == FormWindowState.Normal)
-            //{
-            //    e.Cancel = true;
-            //    //WindowState = FormWindowState.Minimized;
-            //    Hide();
-            //    notifyIcon1.Visible = true;
-            //}
-
+            //
         }
 
         private void notifyIcon1_MouseDown(object sender, MouseEventArgs e)
@@ -262,6 +256,11 @@ namespace Night_Light
             //WindowState = FormWindowState.Minimized;
 
 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+             SetDisplay();
         }
     }
 }
